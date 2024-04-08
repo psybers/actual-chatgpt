@@ -57,12 +57,12 @@ const categorize = (transaction) => {
       .filter({
         'category': null,
         'transfer_id': null,
-        'tombstone': false,
         'starting_balance_flag': false,
         'account.closed': false,
         'account.offbudget': false,
         'account.tombstone': false,
-      }).select('*')
+      })
+      .select('*')
       .orderBy({ 'date': 'desc' })
   );
 
