@@ -27,6 +27,10 @@ ACTUAL_SYNC_ID="<Actual Budget Sync ID>"
 Note that if you already have your OpenAI API key installed for all
 applications, you do not need to repeat it here.
 
+## Installation
+
+Run `npm install` to install any required dependencies.
+
 ## Usage
 
 To ask ChatGPT for suggestions about uncategorized transactions, run:
