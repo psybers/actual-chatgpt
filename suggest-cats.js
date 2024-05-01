@@ -4,6 +4,7 @@ const api = require('@actual-app/api');
 
 const url = process.env.ACTUAL_SERVER_URL || '';
 const password = process.env.ACTUAL_SERVER_PASSWORD || '';
+const file_password = process.env.ACTUAL_FILE_PASSWORD || '';
 const sync_id = process.env.ACTUAL_SYNC_ID || '';
 const cache = process.env.IMPORTER_CACHE_DIR || './cache';
 
@@ -50,7 +51,12 @@ const categorize = (transaction) => {
   await api.init({ serverURL: url, password: password, dataDir: cache });
 
   console.log("open file");
-  await api.downloadBudget(sync_id);
+  if (file_password) {
+    await api.downloadBudget(sync_id, { password: file_password, });
+  } else {  
+    await api.downloadBudget(sync_id);
+  }
+  
 
   const res = await api.runQuery(
     api.q('transactions')
@@ -81,10 +87,15 @@ const categorize = (transaction) => {
     messages.push(instructions(categories.join(', ')));
 
     for (i = 0; i < res.data.length; i++) {
-      console.log(`transaction: ${res.data[i].imported_payee}`);
-      messages.push(categorize(res.data[i].imported_payee))
-      const response = await chat(messages);
-      console.log(`response: ${response.choices[0].message.content}`);
+      if (res.data[i].imported_payee) {
+        messages.push(categorize(res.data[i].imported_payee))
+        const response = await chat(messages);
+        console.log(`response: ${response.choices[0].message.content}`);
+        
+        let newCategory = existing_categories.find(cat => cat.name === response.choices[0].message.content);
+        if (newCategory) {
+          await api.updateTransaction(res.data[i].id, { category: newCategory.id });
+        }
       messages.pop();
     }
   } else {
