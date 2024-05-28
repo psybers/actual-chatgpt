@@ -87,6 +87,7 @@ const categorize = (transaction) => {
     messages.push(instructions(categories.join(', ')));
 
     for (i = 0; i < res.data.length; i++) {
+      console.log(`transaction: ${res.data[i].imported_payee}`);
       if (res.data[i].imported_payee) {
         messages.push(categorize(res.data[i].imported_payee))
         const response = await chat(messages);
@@ -96,7 +97,8 @@ const categorize = (transaction) => {
         if (newCategory) {
           await api.updateTransaction(res.data[i].id, { category: newCategory.id });
         }
-      messages.pop();
+        messages.pop();
+      }
     }
   } else {
     console.log("no uncategorized transactions found");
