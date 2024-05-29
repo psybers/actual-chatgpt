@@ -41,3 +41,9 @@ To ask ChatGPT for suggestions about uncategorized transactions, run:
 ```bash
 node suggest-cats.js
 ```
+
+To ask ChatGPT for suggestions about payee names, run:
+
+```bash
+node suggest-payee.js
+```
