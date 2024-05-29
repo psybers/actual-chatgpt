@@ -22,6 +22,9 @@ OPENAI_API_KEY="<OpenAI API key>"
 ACTUAL_SERVER_URL="https://<Actual Budget server URL>"
 ACTUAL_SERVER_PASSWORD="<Actual Budget server password>"
 ACTUAL_SYNC_ID="<Actual Budget Sync ID>"
+
+# Optional for encrypted files
+ACTUAL_FILE_PASSWORD="<File password>" 
 ```
 
 Note that if you already have your OpenAI API key installed for all
