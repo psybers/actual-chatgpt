@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@actual-app/api": "^6.7.0",
+    "@actual-app/api": "^6.8.1",
     "dotenv": "^16.4.5",
     "openai": "^4.33.0"
   }
